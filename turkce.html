@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Sonsuz Döngülü Kağıt Tiyatrosu - Hubhub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Special+Elite&display=swap');
+        
+        :root { --curtain-color: #800000; }
+        html, body { height: 100%; height: -webkit-fill-available; margin: 0; padding: 0; overflow: hidden; }
+
+        body {
+            background-color: #f0f0f0; color: #1a1a1a; font-family: 'Playfair Display', serif;
+            display: flex; justify-content: center; align-items: center;
+            background-image: url("resimler/arka.jpg"); background-size: cover; background-position: center;
+        }
+
+        #loadingScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f0f0f0; background-image: url("resimler/arka.jpg");
+            background-size: cover; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.8s ease;
+        }
+
+        .loader-spin { animation: spin 2s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .theatre-container { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: 100%; padding: 5px; }
+        
+        .theatre-box { 
+            position: relative; 
+            width: 100vmin; 
+            height: 100vmin; 
+            overflow: hidden; 
+            z-index: 10; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .theatre-box::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('resimler/sahne.png'); 
+            background-size: 100% 100%;
+            background-position: center;
+            pointer-events: none; z-index: 60;
+        }
+
+        .stage {
+            position: absolute; 
+            top: 15.3%; 
+            left: 11%; 
+            width: 78%; 
+            height: 60%; 
+            display: flex; overflow: hidden; z-index: 20; background: #000;
+        }
+
+        .scroll-content { display: flex; will-change: transform; align-items: center; height: 100%; }
+        
+        .crankie-image { 
+            height: 100%; 
+            width: 100%; 
+            min-width: 100%;
+            object-fit: cover; 
+            display: block; 
+            flex-shrink: 0;
+        }
+
+        .subtitle-holder {
+            position: absolute;
+            top: 75%; 
+            left: 7%; 
+            width: 87%; 
+            height: 19%; 
+            z-index: 65;
+            pointer-events: none;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: transparent;
+        }
+
+        .subtitle-marquee {
+            white-space: nowrap;
+            display: inline-block;
+            padding-left: 100%;
+            color: #fff;
+            font-family: 'Special Elite', cursive;
+            font-size: 45px; 
+            text-shadow: 2px 2px 5px #000, 0px 0px 10px rgba(0,0,0,0.5); 
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        .main-curtain {
+            position: absolute; 
+            top: 15.3%; 
+            width: 39%; 
+            height: 60%;
+            background-color: var(--curtain-color); background-image: url("resimler/perde1.jpg");
+            background-size: cover; z-index: 55; transition: transform 0.1s linear;
+        }
+
+        .curtain-left { left: 11%; transform-origin: left; }
+        .curtain-right { right: 11%; transform-origin: right; }
+
+        .controls-group { display: flex; flex-direction: column; align-items: center; margin-left: 20px; z-index: 100; }
+        .crank-label {
+            font-family: 'Special Elite', cursive; font-size: 16px; font-weight: 900; color: white;
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+            margin-bottom: 12px; text-align: center; letter-spacing: 1px;
+        }
+
+        .crank-wrapper { width: 150px; height:150px; }
+        .crank-handle {
+            width: 100%; height: 100%; background: #fff; border-radius: 50%; border: 4px solid #1a1a1a;
+            display: flex; justify-content: center; align-items: center; cursor: grab; touch-action: none;
+            position: relative; box-shadow: 6px 8px 0px rgba(0,0,0,0.1);
+        }
+
+        .crank-knob { width: 22px; height: 22px; background: #fff; border: 3px solid #1a1a1a; border-radius: 50%; position: absolute; top: 10px; }
+
+        .music-controls { display: flex; gap: 15px; margin-top: 20px; }
+        
+        .music-btn {
+            background: white; border: 3px solid #1a1a1a; border-radius: 50%; width: 55px; height: 55px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 22px;
+            box-shadow: 3px 4px 0px rgba(0,0,0,0.1); transition: transform 0.1s;
+        }
+        .music-btn:active { transform: translateY(2px); box-shadow: 1px 2px 0px rgba(0,0,0,0.1); }
+
+        .instruction { position: fixed; bottom: 10px; width: 100%; text-align: center; opacity: 0.8; font-size: 13px; font-style: italic; z-index: 1000; color: white; }
+
+        @media (orientation: portrait) {
+            .theatre-container { flex-direction: column; justify-content: center; padding-top: 2vh; }
+            .theatre-box { width: 100vw; height: 100vw; }
+            .controls-group { margin-left: 0; margin-top: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen">
+        <div class="crank-label">YÜKLENİYOR...</div>
+        <div class="crank-wrapper loader-spin"><div class="crank-handle"><div class="crank-knob"></div></div></div>
+    </div>
+
+    <audio id="bgMusic" src="resimler/tr/fon.mp3" loop preload="metadata"></audio>
+
+    <div class="theatre-container">
+        <div class="theatre-box" id="theatreBox">
+            <div id="curtainLeft" class="main-curtain curtain-left"></div>
+            <div id="curtainRight" class="main-curtain curtain-right"></div>
+            <div class="stage"><div id="scrollContent" class="scroll-content"></div></div>
+            
+            <div id="subHolder" class="subtitle-holder">
+                <img id="bannerImg" src="resimler/banner.png" style="height:100%; position:absolute; left:0; transition: transform 0.1s linear; z-index: 70;">
+                <div id="subText" class="subtitle-marquee" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="controls-group">
+            <div class="crank-label">BAŞLAMAK İÇİN KOLU DÖNDÜR </div>
+            <div class="crank-wrapper">
+                <div id="crankHandle" class="crank-handle">
+                    <div class="crank-knob"></div>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+                        <polyline points="21 3 21 8 16 8"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <div class="music-controls">
+                <button id="playBtn" class="music-btn" title="Oynat">▶</button>
+                <button id="stopBtn" class="music-btn" title="Durdur">■</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="instruction" id="statusText">Başlamak için kolu çevirin...</div>
+
+    <script>
+        const IMAGE_PATH = "resimler/";
+
+        const MY_IMAGES = ["sahne01.jpg","sahne02.jpg","sahne2.jpg","sahne3.jpg","sahne4.jpg","sahne5.jpg","sahne6.jpg","sahne7.jpg","sahne8.jpg","sahne9.jpg","sahne10.jpg","sahne11.jpg","sahne12.jpg","sahne13.jpg","sahne14.jpg","sahne15.jpg","sahne16.jpg","sahne17.jpg","sahne18.jpg","sahne19.jpg","sahne20.jpg","sahne21.jpg","sahne22.jpg","sahne23.jpg","sahne24a.jpg","sahne25.jpg","sahne26.jpg","sahne27.jpg","sahne28.jpg","sahne29.jpg"];
+
+        const SCENE_TEXTS = [
+           `Hikâyeyi her bölüm için ayrı ayrı dinleyebilirsin. Bunun için resmi sahneye tam denk getirmen gerek. Kolu her çevirdiğinde o resmin hikayesi başlar ve altyazı olarak görünür. İyi seyirler`,
+ `Hikayemiz burada başlıyor...  BAUBA: Hubhubların Kralı`,
+ `1. Bölüm: Ay Işığının Çocukları: Evrenin en ücra köşesinde kadim bir gezegen varmış. Bu gezegenin kalbinde, Ay Işığı Kabilesi yaşamlarını sürdürürmüş. Kendilerine Hubhub diyen bu varlıklar, ne ekmekle ne de suyla beslenirmiş; onların tek hayat kaynağı, gökyüzünden süzülen o masum ay ışığıymış. Enerjilerini bu ışıktan sağar, ruhlarını onunla beslerlermiş.`, 
+
+`2. Bölüm: Bir Eksik Umut: Kabilenin bilge lideri, halkı tarafından çok sevilse de yüreğinde derin bir sızı taşırmış. Zaman geçip giderken, bir evladının olmaması onu kederin karanlık kuyularına itermiş. Sarayının balkonundan gökyüzüne bakar, bu sessizliği bir çocuk sesinin bölmesini hayal edermiş.`, 
+
+`3. Bölüm: Kutsal Yakarış:Sonunda lider ve eşi, ellerini göğe açarak Ay Işığı Tanrısı’na yakarmışlar. Kalplerindeki saf arzuyla, soylarını devam ettirecek bir mucize dilemişler. Duaları, ayın şefkatli ışığında yankılanmış.`, 
+
+`4. Bölüm: Mucizenin İlk İzleri: Dualar karşılıksız kalmamış. Bir sabah hanım lider, içinde tarif edilemez bir sıcaklıkla uyanmış. Karnında minik bir can, bir Hubhub filizlenmekteymiş. Bu, sadece bir bebeğin değil, kabilenin geleceğinin de müjdecisiymiş.`,
+ 
+`5. Bölüm: Büyük Şölen :Haber kabileye ulaştığında yer yerinden oynamış. Günlerce süren kutlamalar yapılmış, şarkılar söylenmiş. Ay ışığı altında dans eden Hubhublar, bu mucizeyi en büyük bayramları ilan etmişler.`, 
+
+`6. Bölüm: İsim ve Kehanet: Aylar geçmiş, doğum vakti yaklaşmış. Hubhublar öyle gizemli bir kabileymiş ki, bebekleri henüz anne karnındayken dünyayla bağ kurar, konuşmaya başlarmış. Kabile halkı bebeğin sesini duymak için toplanmış. Bebeğin kendine seçtiği isim, evrenin boşluğunda yankılanmış: Bauba.`, 
+
+`7. Bölüm: Kötü Bir Sezgi: Ancak doğuma sayılı günler kala Bauba huzursuzlanmaya başlamış. Annesinin karnında alışılmadık bir hareketlilikle sancılara sebep oluyormuş. Bilgeler ona nedenini sorduklarında, Bauba’nın henüz doğmamış sesi titreyerek cevap vermiş: "Kötü bir şey hissediyorum... İçimdeki enerjinin çekildiğini, ışığın azaldığını hissediyorum." Lider bu sözlerle ürpermiş ama halkına korkusunu belli etmemeye çalışmış.`,
+ 
+`8. Bölüm: Karanlığın Çöküşü: Zaman hızla akıp giderken, Bauba’nın hissettiği o uğursuzluk tüm kabilenin üzerine çökmüş. Bir gece, gökyüzündeki ay ışığı önce solmuş, sonra yavaş yavaş kaybolmaya başlamış. Işık azaldıkça Hubhubların neşesi sönmüş, bedenleri bitkin düşmüş. Kabile, tarihindeki en büyük felaketle yüzleşiyormuş.`,
+ 
+`9. Bölüm: Bilgeler Meclisi: Kabilenin en yaşlıları, asalarına dayanarak kadim masanın başında bir araya gelmişler. Bu sessiz ölümü durdurmak için bir araştırma ekibi kurulmasına karar verilmiş. Işığın neden terk ettiğini bulmak, artık bir varoluş savaşına dönüşmüş.`,
+ 
+`10. Bölüm: Işık Hırsızları: Ekibin araştırmaları acı gerçeği ortaya çıkarmış: Ay ışığı doğa olaylarıyla kaybolmamış, resmen çalınmış! Devasa, heybetli ve acımasız canlılardan oluşan bir grup, gökyüzünün nurunu kendi karanlık hanelerine hapsetmişler. Kabile lideri, halkının geleceği için bu devlerle yüzleşme görevini bizzat üstlenmiş ve yola koyulmuş.`,
+ 
+`11. Bölüm: Yüzleşme: Lider, uzun ve meşakkatli bir yolculuğun ardından canavarların inine ulaşmış. Karşısındaki manzara ürkütücüymüş; koca gökyüzü parçalara ayrılmış gibi duruyormuş.`, 
+
+`12. Bölüm: Işığın Bedeli: Dev canlılar, kükreyen sesleriyle ışığın artık kendilerine ait olduğunu, eğer Hubhublar bu ışıktan faydalanmak istiyorlarsa ağır bedeller ödemeleri gerektiğini söylemişler. Lider çok öfkelenmiş; "Işık doğanındır, kimsenin malı olamaz! Bizim canımız o ışıktır!" dese de devleri ikna edememiş. Başka yol kalmadığını anlayan lider, savaş ilan etmiş.`,
+ 
+`13. Bölüm: Zamansız Doğum: Kabilenin en güçlü savaşçıları toplanmış, büyük bir hırsla sefere çıkılmış. Ancak kaderin garip bir cilvesi olarak, tam o sırada Bauba dünyaya gözlerini açmış. Kabile, karanlığın ortasında gelen bu doğuma sevinse mi yoksa savaşın gölgesinde yas mı tutsa bilememiş.`,
+ 
+`14. Bölüm: Mağlubiyetin Acısı:Devler, ışığı geri vermeye niyetli değilmiş. Işıkları söndüğü için eski güçlerinden eser kalmayan Hubhub ordusu, üst üste ağır yenilgiler almış. Her saldırı, daha fazla yorgunluk ve daha fazla umutsuzluk getirmiş. Enerjisiz kalan bedenleri, kılıç tutamaz hale gelmiş.`, 
+
+`15. Bölüm: Ölümün Kıyısında: Sonunda pes etmişler. Çaresizlik içinde, enerjileri tükenmiş bir halde köylerine dönüp ölümü beklemeye başlamışlar. Onları en çok üzen şey ise ölecek olmaları değil, minik Bauba’nın geleneklere uygun olarak doğduğunda kutsal ay ışığında yıkanamamış olmasıymış.`,
+ 
+`16. Bölüm: Karanlığın Çocuğu: Fakat kimsenin fark etmediği bir mucize gerçekleşmiş: Bauba, ay ışığı olmadan, saf karanlığın içinde doğmayı başarmış! Bu durum onu kabilenin geri kalanından farklı kılıyormuş. O, ışığa ihtiyaç duymadan da güçlenebilen ilk Hubhub'mış. Bauba büyüdükçe, bu gizemli güç kabile tarafından fark edilmeye başlanmış. O, halkın son umudu, karanlıkta açan bir çiçekmiş. Halkı gün be gün solarken, kabilenin yaşlıları ellerinde kalan son güçle Bauba’yı eğitmeye başlamışlar. Bauba, hem fiziksel hem de ruhsal olarak çelik gibi sertleşmiş. Ve sonunda, kurtuluş günü kapıyı çalmış.`, 
+
+`17. Bölüm: Yalnız Savaşçı: Kendi zırhını kuşanmış olan Bauba, halkının dualarını yanına alarak devlerin inine doğru tek başına yola çıkmış.`, 
+
+`18. Bölüm: Son Uyarı: Bauba, devlerin karşısına dikildiğinde önce konuşmayı seçmiş. "Yaptığınız şey sadece ışığı çalmak değil, bir halkın nefesini kesmektir. Onu serbest bırakın!" demiş. Ancak kibirlerine yenik düşen devler, bu küçük kahramanı kahkahalarla geri çevirmişler. Artık söz bitmiş, kılıçlar çekilmiş.`, 
+
+`19. Bölüm: Zaferin Rengi: Savaş başladığında devler büyük bir şok yaşamış. Bauba, karanlıkta doğduğu için karanlığın tüm sırlarına hakimmiş ve zayıflıktan değil, karanlıktan güç alıyormuş. Teker teker hepsini dize getirmiş. Büyük bir gürültüyle devleri yenmiş ve ışığın tutsak edildiği o çirkin mahzeni parçalamış.`, 
+
+`20. Bölüm: Gökyüzünün Dönüşü: Kocaman ayı, hapsedildiği o karanlık yerden çıkaran Bauba, ışığın gökyüzünü yeniden nasıl bir dantel gibi işlediğini izlemiş. O an bir şey daha olmuş: Kutsal ay ışığı Bauba’nın vücuduna değdiğinde, içindeki güç katlanarak artmış. Karanlıkta yoğrulan gücü, ışıkla birleşince Bauba tüm diyarların en kudretli varlığına dönüşmüş.`,
+
+`21. Bölüm: Eve Dönüş: Bauba, büyük bir zaferle kabilesine dönmüş. Işığın gelişiyle canlanan halkına, yaşadığı her şeyi bir bir anlatmış. Gücünün zirvesinde olmasına rağmen, hala öğrenecek çok şeyi olduğunu ve eğitimine devam edeceğini söyleyerek bilgeliğini kanıtlamış.`, 
+
+`22. Bölüm: Yeni Bir Çağ: Zamanı geldiğinde halkı için adil bir reis olacağına ve babasının şanlı ismini gururla taşıyacağına söz vermiş. Ay Işığı Kabilesi, yeniden kavuştukları gümüşi ışığın altında, günlerce süren şenliklerle Bauba’nın zaferini kutlamışlar.`,
+ 
+`İşte bu Bauba'nın hikayesi... Kahraman olmak için doğru kararları doğru zamanda vermek gerekir.`,
+ `Yazan ve Resimleyen: Hasan Yavuz`,
+          ];
+
+        const SCENE_SPEEDS = [
+    18, // Sahne 1  (Giriş/Tanıtım)
+    8,  // Sahne 2  (Hubhubların Kralı)
+    45, // Sahne 3  (1. Bölüm)
+    38, // Sahne 4  (2. Bölüm)
+    38, // Sahne 5  (3. Bölüm)
+    38, // Sahne 6  (4. Bölüm)
+    40, // Sahne 7  (5. Bölüm)
+    43, // Sahne 8  (6. Bölüm)
+    55, // Sahne 9  (7. BÖLÜM - BURAYI DEĞİŞTİRİYORSUN)
+    42, // Sahne 10 (8. Bölüm)
+    40, // Sahne 11 (9. Bölüm)
+    50, // Sahne 12 (10. Bölüm)
+    30, // Sahne 13 (11. Bölüm)
+    48, // Sahne 14 (12. Bölüm)
+    40, // Sahne 15 (13. Bölüm)
+    40, // Sahne 16 (14. Bölüm)
+    40, // Sahne 17 (15. Bölüm)
+    70, // Sahne 18 (16. Bölüm)
+    28, // Sahne 19 (17. Bölüm)
+    38, // Sahne 20 (18. Bölüm)
+    40, // Sahne 21 (19. Bölüm)
+    40, // Sahne 22 (20. Bölüm)
+    40, // Sahne 23 (21. Bölüm)
+    40, // Sahne 24 (22. Bölüm)
+    20, // Sahne 25 (Son Karar)
+    10, // Sahne 26 (Yazan ve Resimleyen)
+    10, // Sahne 27 (Ekstra Görsel/Boşluk)
+    10, // Sahne 28 (Ekstra Görsel/Boşluk)
+    10, // Sahne 29 (Ekstra Görsel/Boşluk)
+    10  // Sahne 30 (Ekstra Görsel/Boşluk)
+];
+
+        const scrollContent = document.getElementById('scrollContent');
+        const crankHandle = document.getElementById('crankHandle');
+        const curtainLeft = document.getElementById('curtainLeft');
+        const curtainRight = document.getElementById('curtainRight');
+        const statusText = document.getElementById('statusText');
+        const bgMusic = document.getElementById('bgMusic');
+        const subHolder = document.getElementById('subHolder');
+        const subText = document.getElementById('subText');
+        const bannerImg = document.getElementById('bannerImg');
+
+        MY_IMAGES.forEach((src) => {
+            const img = document.createElement('img');
+            img.src = IMAGE_PATH + src;
+            img.className = 'crankie-image';
+            scrollContent.appendChild(img);
+        });
+
+        let currentRotation = 0; 
+        let lastAngle = 0;
+        let isDragging = false;
+        let musicStarted = false; 
+        const CURTAIN_OPEN_THRESHOLD = 360; 
+        let currentTrackName = "fon.mp3"; 
+        let lastActiveIndex = -1;
+
+        // --- TAM EKRAN FONKSİYONU ---
+        function toggleFullScreen() {
+            const doc = window.document;
+            const docEl = doc.documentElement;
+
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+            if (window.innerWidth > window.innerHeight) { // Yatay modda mıyız?
+                if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                    if (requestFullScreen) requestFullScreen.call(docEl);
+                }
+            } else { // Dikey modda mıyız?
+                if (doc.fullscreenElement || doc.mozFullScreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement) {
+                    if (cancelFullScreen) cancelFullScreen.call(doc);
+                }
+            }
+        }
+
+        // Oryantasyon değiştiğinde kontrol et
+        window.addEventListener('resize', toggleFullScreen);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => document.getElementById('loadingScreen').style.display = 'none', 800);
+                updateStage();
+            }, 1000); 
+        });
+
+        function changeMusic(fileName) {
+            if (currentTrackName !== fileName) {
+                currentTrackName = fileName;
+                bgMusic.src = IMAGE_PATH + "tr/" + fileName;
+                bgMusic.loop = false; //
+                bgMusic.play().catch(() => {});
+            }
+        }
+
+        function updateStage() {
+            if (currentRotation <= CURTAIN_OPEN_THRESHOLD) {
+                const progress = Math.max(0, currentRotation / CURTAIN_OPEN_THRESHOLD);
+                curtainLeft.style.transform = `translateX(${-progress * 110}%)`;
+                curtainRight.style.transform = `translateX(${progress * 110}%)`;
+                bannerImg.style.display = "block";
+                bannerImg.style.transform = `translateX(${-progress * 120}%)`;
+                subText.style.display = "none";
+                changeMusic("fon.mp3"); 
+                statusText.innerText = "Perde açılıyor...";
+            } else {
+                curtainLeft.style.transform = `translateX(-110%)`;
+                curtainRight.style.transform = `translateX(110%)`;
+                bannerImg.style.display = "none";
+                subText.style.display = "inline-block";
+                
+                const firstImg = scrollContent.querySelector('img');
+                const imageWidth = firstImg ? firstImg.offsetWidth : 100;
+                const dynamicSensitivity = imageWidth / 360;
+
+                let scrollPos = (currentRotation - CURTAIN_OPEN_THRESHOLD) * dynamicSensitivity;
+                const maxScroll = scrollContent.scrollWidth - imageWidth;
+                if (scrollPos > maxScroll) {
+                    scrollPos = maxScroll;
+                    currentRotation = (maxScroll / dynamicSensitivity) + CURTAIN_OPEN_THRESHOLD;
+                }
+
+                scrollContent.style.transform = `translateX(${-scrollPos}px)`;
+
+                let activeIndex = Math.floor(scrollPos / imageWidth);
+                if (activeIndex < 0) activeIndex = 0;
+                if (activeIndex > 35) activeIndex = 35;
+
+                if(activeIndex !== lastActiveIndex) {
+                    subText.innerText = SCENE_TEXTS[activeIndex] || "";
+                    const currentSpeed = SCENE_SPEEDS[activeIndex] || 40;
+                    subText.style.animation = "none"; 
+                    subText.offsetHeight; 
+                    subText.style.animation = `marquee ${currentSpeed}s linear infinite`; 
+                    lastActiveIndex = activeIndex;
+                }
+
+                let musicNum = activeIndex + 2; 
+                if (musicNum > 36) musicNum = 36; 
+                changeMusic(`fon${musicNum}.mp3`);
+                statusText.innerText = `Sahne: ${activeIndex + 1} / 36`;
+            }
+        }
+
+        function handleMove(e) {
+            if (!isDragging) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const rect = crankHandle.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const newAngle = Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI);
+            let delta = newAngle - lastAngle;
+            if (delta > 180) delta -= 360;
+            if (delta < -180) delta += 360;
+            currentRotation += delta;
+            if (currentRotation < 0) currentRotation = 0;
+            lastAngle = newAngle;
+            crankHandle.style.transform = `rotate(${currentRotation}deg)`;
+            updateStage();
+        }
+
+        const start = (e) => {
+            // Kullanıcı dokunduğunda tam ekranı tetikle (Cihaz yataysa)
+            toggleFullScreen();
+
+            if (!musicStarted) {
+                bgMusic.play().catch(() => {});
+                musicStarted = true;
+            }
+            isDragging = true;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const rect = crankHandle.getBoundingClientRect();
+            lastAngle = Math.atan2(clientY - (rect.top + rect.height/2), clientX - (rect.left + rect.width/2)) * (180/Math.PI);
+        };
+
+        const stop = () => { isDragging = false; };
+
+        crankHandle.addEventListener('mousedown', start);
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('mouseup', stop);
+        crankHandle.addEventListener('touchstart', (e) => { e.preventDefault(); start(e); }, { passive: false });
+        window.addEventListener('touchmove', (e) => { handleMove(e); }, { passive: false });
+        window.addEventListener('touchend', stop);
+
+        document.getElementById('playBtn').addEventListener('click', () => { toggleFullScreen(); bgMusic.play(); musicStarted = true; });
+        document.getElementById('stopBtn').addEventListener('click', () => bgMusic.pause());
+    </script>
+</body>
+</html>
