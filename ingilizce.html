@@ -1,6 +1,99 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+    <div id="tutorialOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 1; transition: opacity 0.5s ease;">
+    <div style="background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 40px 30px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column; align-items: center;">
+        
+        <div id="tutMessage" style="font-family: 'Special Elite', cursive, sans-serif; font-size: 19px; margin-bottom: 30px; min-height: 85px; color: #1a1a1a; line-height: 1.5;">
+            Tiyatroya Hoş Geldiniz!<br>Hazırlanıyor...
+        </div>
+        
+        <div style="position: relative; width: 140px; height: 140px; margin: 20px 0;">
+            <svg id="tutArrow" style="position: absolute; top: -10px; left: -10px; width: 160px; height: 160px; pointer-events: none; opacity: 0; transition: opacity 0.5s;" viewBox="0 0 100 100">
+                <path d="M 50,10 A 40,40 0 0 1 90,50" fill="none" stroke="#e74c3c" stroke-width="4" stroke-linecap="round" />
+                <polyline points="85,40 90,50 80,50" fill="none" stroke="#e74c3c" stroke-width="4" />
+                <style>
+                    @keyframes arrowAnim { 0% { opacity: 0; transform: rotate(-20deg); } 20% { opacity: 1; } 80% { opacity: 1; transform: rotate(160deg); } 100% { opacity: 0; transform: rotate(180deg); } }
+                    .animate-arrow { animation: arrowAnim 6s infinite; }
+                </style>
+            </svg>
+            
+            <div id="tutCrank" style="width: 100%; height: 100%; border: 5px solid #1a1a1a; border-radius: 50%; position: relative; transition: transform 5s ease-in-out; transform: rotate(0deg);">
+                <div style="width: 22px; height: 22px; background: #e74c3c; border-radius: 50%; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);"></div>
+            </div>
+        </div>
+
+        <div style="width: 240px; height: 120px; background: #222; margin: 25px 0; position: relative; overflow: hidden; border: 3px solid #000; border-radius: 5px;">
+            <div id="tutCurtainL" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: #800000; transition: transform 4s ease-in-out; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+            <div id="tutCurtainR" style="position: absolute; top: 0; right: 0; width: 50%; height: 100%; background: #800000; transition: transform 4s ease-in-out; border-left: 1px solid rgba(0,0,0,0.3);"></div>
+        </div>
+
+        <button id="tutBtn" style="background: #e74c3c; color: white; padding: 15px 40px; border-radius: 40px; font-family: 'Special Elite', cursive; font-size: 18px; cursor: pointer; display: none; border: none; box-shadow: 0 4px 15px rgba(231,76,60,0.3);">ANLADIM, BAŞLAT!</button>
+    </div>
+
+    <script>
+        (function() {
+            const overlay = document.getElementById('tutorialOverlay');
+            const crank = document.getElementById('tutCrank');
+            const arrow = document.getElementById('tutArrow');
+            const curtainL = document.getElementById('tutCurtainL');
+            const curtainR = document.getElementById('tutCurtainR');
+            const message = document.getElementById('tutMessage');
+            const btn = document.getElementById('tutBtn');
+            let step = 0;
+
+            function runTutorial() {
+                if (step >= 2) {
+                    message.innerHTML = "Harika! Artık hazırsınız.<br>İyi seyirler dileriz.";
+                    btn.style.display = "block";
+                    arrow.classList.remove('animate-arrow');
+                    arrow.style.opacity = "0";
+                    return;
+                }
+
+                // Başlangıç Ayarları
+                arrow.classList.add('animate-arrow');
+                message.innerText = "Kolu gösterilen yönde yavaşça çevirmeye başlayın.";
+                
+                // 5 Saniyelik Dönüş Başlar
+                crank.style.transform = `rotate(${(step + 1) * 370}deg)`;
+                
+                // Perde Açılışı (1.5sn sonra)
+                setTimeout(() => {
+                    curtainL.style.transform = "translateX(-100%)";
+                    curtainR.style.transform = "translateX(100%)";
+                }, 1500);
+
+                // Yazı Değişimi (3. saniyede)
+                setTimeout(() => {
+                    message.innerHTML = "Yeni sahneye geçmek için kolu<br><b>saat 1 yönünde durduğunda yeni sahnenin yazısı ve hikayesi başlar</b> tutmalısınız.";
+                }, 3000);
+
+                // Reset ve Döngü (7.5sn toplam süre)
+                setTimeout(() => {
+                    curtainL.style.transform = "translateX(0)";
+                    curtainR.style.transform = "translateX(0)";
+                    step++;
+                    setTimeout(runTutorial, 2000);
+                }, 7500);
+            }
+
+            btn.addEventListener('click', () => {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 500);
+            });
+
+            // Sitenin kendi loadingScreen'i bittiğinde çalışması için kontrol
+            const checkLoader = setInterval(() => {
+                const loader = document.getElementById('loadingScreen');
+                if (!loader || loader.style.display === 'none' || loader.style.opacity === '0') {
+                    clearInterval(checkLoader);
+                    setTimeout(runTutorial, 1000);
+                }
+            }, 500);
+        })();
+    </script>
+</div>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
