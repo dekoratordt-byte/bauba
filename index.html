@@ -87,22 +87,51 @@
             text-align: center;
         }
 
-      @media (max-width: 1000px) {
-            .button-container {
-                flex-direction: column;
-                gap: 30px;
-            }
-            .circle-btn {
-                width: 130px;
-                height: 130px;
-            }
-            .header-logo {
-                /* Dikey konumda resmi büyütmek için %95 veya %100 yapıyoruz */
-                width: 150%; 
-                max-width: none; /* Mobilde kısıtlamayı kaldırıyoruz */
-                margin-top: 10px; /* Üstten biraz boşluk iyi durabilir */
-            }
-        }
+      /* Mobil Dikey Görünüm (Portrait) */
+@media (max-width: 1000px) and (orientation: portrait) {
+    .button-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .circle-btn {
+        width: 130px;
+        height: 130px;
+    }
+    .header-logo {
+        width: 150%; 
+        max-width: none;
+        margin-top: 10px;
+    }
+}
+
+/* Mobil Yatay Görünüm (Landscape) */
+@media (max-height: 600px) and (orientation: landscape) {
+    body {
+        gap: 10px; /* Elemanlar arası boşluğu daraltıyoruz */
+        justify-content: center;
+        overflow-y: auto; /* Çok küçük ekranlarda kaydırma gerekirse diye */
+    }
+    
+    .header-logo {
+        width: 40%; /* Yatayda resmi makul bir boyuta çekiyoruz */
+        max-height: 30vh; /* Ekran yüksekliğinin %30'undan fazla yer kaplamasın */
+        object-fit: contain;
+    }
+
+    .button-container {
+        flex-direction: row; /* Butonları yan yana getiriyoruz */
+        gap: 30px;
+    }
+
+    .circle-btn {
+        width: 100px; /* Butonları biraz küçültüyoruz */
+        height: 100px;
+    }
+    
+    .btn-label {
+        font-size: 14px; /* Yazıları küçültüyoruz */
+    }
+}
     </style>
 </head>
 <body>
