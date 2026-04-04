@@ -87,7 +87,7 @@
             text-align: center;
         }
 
-        @media (max-width: 600px) {
+      @media (max-width: 900px) {
             .button-container {
                 flex-direction: column;
                 gap: 30px;
@@ -97,7 +97,10 @@
                 height: 130px;
             }
             .header-logo {
-                width: 70%; /* Küçük ekranlarda biraz daha küçültmek istersen */
+                /* Dikey konumda resmi büyütmek için %95 veya %100 yapıyoruz */
+                width: 95%; 
+                max-width: none; /* Mobilde kısıtlamayı kaldırıyoruz */
+                margin-top: 20px; /* Üstten biraz boşluk iyi durabilir */
             }
         }
     </style>
