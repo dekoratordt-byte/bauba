@@ -1,417 +1,128 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Sonsuz Döngülü Kağıt Tiyatrosu - Hubhub</title>
+    <title>Hubhub - Menü</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Special+Elite&display=swap');
-        
-        :root { --curtain-color: #800000; }
-        html, body { height: 100%; height: -webkit-fill-available; margin: 0; padding: 0; overflow: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; 
+        }
 
         body {
-            background-color: #f0f0f0; color: #1a1a1a; font-family: 'Playfair Display', serif;
-            display: flex; justify-content: center; align-items: center;
-            background-image: url("resimler/arka.jpg"); background-size: cover; background-position: center;
-        }
-
-        #loadingScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #f0f0f0; background-image: url("resimler/arka.jpg");
-            background-size: cover; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.8s ease;
-        }
-
-        .loader-spin { animation: spin 2s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .theatre-container { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: 100%; padding: 5px; }
-        
-        .theatre-box { 
-            position: relative; 
-            width: 100vmin; 
-            height: 100vmin; 
-            overflow: hidden; 
-            z-index: 10; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-        }
-
-        .theatre-box::after {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('resimler/sahne.png'); 
-            background-size: 100% 100%;
+            background-image: url("resimler/arka.jpg"); 
+            background-size: cover; 
             background-position: center;
-            pointer-events: none; z-index: 60;
-        }
-
-        .stage {
-            position: absolute; 
-            top: 15.3%; 
-            left: 11%; 
-            width: 78%; 
-            height: 60%; 
-            display: flex; overflow: hidden; z-index: 20; background: #000;
-        }
-
-        .scroll-content { display: flex; will-change: transform; align-items: center; height: 100%; }
-        
-        .crankie-image { 
-            height: 100%; 
-            width: 100%; 
-            min-width: 100%;
-            object-fit: cover; 
-            display: block; 
-            flex-shrink: 0;
-        }
-
-        .subtitle-holder {
-            position: absolute;
-            top: 75%; 
-            left: 7%; 
-            width: 87%; 
-            height: 19%; 
-            z-index: 65;
-            pointer-events: none;
-            overflow: hidden;
-            display: flex;
+            display: flex; 
+            flex-direction: column; /* İçeriği dikeyde hizalamak için eklendi */
+            justify-content: center; 
             align-items: center;
-            background: transparent;
-        }
-
-        .subtitle-marquee {
-            white-space: nowrap;
-            display: inline-block;
-            padding-left: 100%;
-            color: #fff;
             font-family: 'Special Elite', cursive;
-            font-size: 45px; 
-            text-shadow: 2px 2px 5px #000, 0px 0px 10px rgba(0,0,0,0.5); 
+            gap: 30px; /* Resim ve butonlar arasındaki boşluk */
         }
 
-        @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
+        /* Başlık resmi için yeni stil */
+        .header-logo {
+            max-width: 1000px; /* Bilgisayarlarda çok büyük olmaması için */
+            width: 80%; /* Mobilde ekranın %80'ini kaplar */
+            height: auto;
+            z-index: 10;
         }
 
-        .main-curtain {
-            position: absolute; 
-            top: 15.3%; 
-            width: 39%; 
-            height: 60%;
-            background-color: var(--curtain-color); background-image: url("resimler/perde1.jpg");
-            background-size: cover; z-index: 55; transition: transform 0.1s linear;
+        .button-container {
+            display: flex;
+            gap: 50px; 
+            z-index: 10;
         }
 
-        .curtain-left { left: 11%; transform-origin: left; }
-        .curtain-right { right: 11%; transform-origin: right; }
-
-        .controls-group { display: flex; flex-direction: column; align-items: center; margin-left: 20px; z-index: 100; }
-        .crank-label {
-            font-family: 'Special Elite', cursive; font-size: 16px; font-weight: 900; color: white;
-            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-            margin-bottom: 12px; text-align: center; letter-spacing: 1px;
+        .circle-btn {
+            width: 150px;
+            height: 150px;
+            background: #ffffff;
+            border: 6px solid #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1a1a1a;
+            box-shadow: 8px 10px 0px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            position: relative;
         }
 
-        .crank-wrapper { width: 150px; height:150px; }
-        .crank-handle {
-            width: 100%; height: 100%; background: #fff; border-radius: 50%; border: 4px solid #1a1a1a;
-            display: flex; justify-content: center; align-items: center; cursor: grab; touch-action: none;
-            position: relative; box-shadow: 6px 8px 0px rgba(0,0,0,0.1);
+        .circle-btn::after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            width: 20px;
+            height: 20px;
+            background: #1a1a1a;
+            border-radius: 50%;
         }
 
-        .crank-knob { width: 22px; height: 22px; background: #fff; border: 3px solid #1a1a1a; border-radius: 50%; position: absolute; top: 10px; }
-
-        .music-controls { display: flex; gap: 15px; margin-top: 20px; }
-        
-        .music-btn {
-            background: white; border: 3px solid #1a1a1a; border-radius: 50%; width: 55px; height: 55px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 22px;
-            box-shadow: 3px 4px 0px rgba(0,0,0,0.1); transition: transform 0.1s;
+        .circle-btn:hover {
+            transform: scale(1.05);
+            background: #f0f0f0;
         }
-        .music-btn:active { transform: translateY(2px); box-shadow: 1px 2px 0px rgba(0,0,0,0.1); }
 
-        .instruction { position: fixed; bottom: 10px; width: 100%; text-align: center; opacity: 0.8; font-size: 13px; font-style: italic; z-index: 1000; color: white; }
+        .circle-btn:active {
+            transform: translateY(4px);
+            box-shadow: 2px 4px 0px rgba(0,0,0,0.2);
+        }
 
-        @media (orientation: portrait) {
-            .theatre-container { flex-direction: column; justify-content: center; padding-top: 2vh; }
-            .theatre-box { width: 100vw; height: 100vw; }
-            .controls-group { margin-left: 0; margin-top: 30px; }
+        .btn-label {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .button-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .circle-btn {
+                width: 130px;
+                height: 130px;
+            }
+            .header-logo {
+                width: 70%; /* Küçük ekranlarda biraz daha küçültmek istersen */
+            }
         }
     </style>
 </head>
 <body>
-    <div id="loadingScreen">
-        <div class="crank-label">LOADİNG...</div>
-        <div class="crank-wrapper loader-spin"><div class="crank-handle"><div class="crank-knob"></div></div></div>
+
+    <img src="resimler/baslik.png" alt="Hubhub Başlık" class="header-logo">
+
+    <div class="button-container">
+        
+        <a href="turkce.html" class="circle-btn">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            <span class="btn-label">TÜRKÇE HİKAYE</span>
+        </a>
+
+        <a href="ingilizce.html" class="circle-btn">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span class="btn-label">ENGLISH STORY</span>
+        </a>
+
     </div>
 
-    <audio id="bgMusic" src="resimler/fon.mp3" loop preload="metadata"></audio>
-
-    <div class="theatre-container">
-        <div class="theatre-box" id="theatreBox">
-            <div id="curtainLeft" class="main-curtain curtain-left"></div>
-            <div id="curtainRight" class="main-curtain curtain-right"></div>
-            <div class="stage"><div id="scrollContent" class="scroll-content"></div></div>
-            
-            <div id="subHolder" class="subtitle-holder">
-                <img id="bannerImg" src="resimler/banner.png" style="height:100%; position:absolute; left:0; transition: transform 0.1s linear; z-index: 70;">
-                <div id="subText" class="subtitle-marquee" style="display:none;"></div>
-            </div>
-        </div>
-
-        <div class="controls-group">
-            <div class="crank-label">TURN THE HANDLE TO START. </div>
-            <div class="crank-wrapper">
-                <div id="crankHandle" class="crank-handle">
-                    <div class="crank-knob"></div>
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
-                        <polyline points="21 3 21 8 16 8"></polyline>
-                    </svg>
-                </div>
-            </div>
-            <div class="music-controls">
-                <button id="playBtn" class="music-btn" title="Oynat">▶</button>
-                <button id="stopBtn" class="music-btn" title="Durdur">■</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="instruction" id="statusText">Başlamak için kolu çevirin...</div>
-
-    <script>
-        const IMAGE_PATH = "resimler/";
-        const MY_IMAGES = ["sahne0.jpg","sahne1.jpg","sahne2.jpg","sahne3.jpg","sahne4.jpg","sahne5.jpg","sahne6.jpg","sahne7.jpg","sahne8.jpg","sahne9.jpg","sahne10.jpg","sahne11.jpg","sahne12.jpg","sahne13.jpg","sahne14.jpg","sahne15.jpg","sahne16.jpg","sahne17.jpg","sahne18.jpg","sahne19.jpg","sahne20.jpg","sahne21.jpg","sahne22.jpg","sahne23.jpg","sahne24.jpg","sahne25.jpg","sahne26.jpg","sahne27.jpg","sahne28.jpg","sahne29.jpg","sahne30.jpg","sahne31.jpg","sahne32.jpg","sahne33.jpg","sahne34.jpg","sahne35.jpg","sahne36.jpg"];
-
-        const SCENE_TEXTS = [
-   `You can listen to the story for each episode separately. To do this, you need to align the image perfectly with the scene. Each time you turn the joystick, the story of that image will begin and appear as subtitles. Enjoy watching!`,         
-`BAUBA: The King of the Hubhubs`,
-
- `Chapter 1: Children of Moonlight: In the farthest corner of the universe, there was an ancient planet. At the heart of this planet lived the Moonlight Tribe. These beings, who called themselves Hubhubs, were nourished by neither bread nor water; their only source of life was the innocent moonlight that streamed down from the sky. They drew their energy from this light and nourished their souls with it.`, 
-
-`Chapter 2: A Missing Hope: Although the wise leader of the tribe was much loved by his people, he carried a deep ache in his heart. As time passed, the fact that he had no child pushed him into the dark depths of sorrow. He would look at the sky from the balcony of his palace, imagining that the silence would be broken by the sound of a child's voice.`, 
-
-`Chapter 3: The Holy Supplication: Finally, the leader and his wife raised their hands to the sky and prayed to the God of Moonlight. With the pure desire in their hearts, they asked for a miracle that would continue their lineage. Their prayers echoed in the compassionate light of the moon.`, 
-
-`Chapter 4: The First Traces of the Miracle:The prayers had not gone unanswered. One morning, the female leader awoke with an indescribable warmth within her. A tiny life, a Hubhub, was sprouting in her womb. This was not only a sign of a baby, but also a harbinger of the tribe's future.`,
- 
-`Chapter 5: The Great Feast:When the news reached the tribe, the ground shook. Celebrations lasted for days, songs were sung. The Hubhubs, dancing under the moonlight, declared this miracle their greatest festival.`, 
-
-`Chapter 6: The Name and the Prophecy: Months passed, the time of birth approaching. The Hubhubs were such a mysterious tribe that their babies would connect with the world and begin to speak while still in the womb. The tribe gathered to hear the baby's voice. The name the baby chose for itself echoed in the void of the universe: Bauba.`, 
-
-`Chapter 7: A Bad Intuition: However, with only a few days left until the birth, Bauba began to become restless. In his mother's womb, an unusual movement was causing him pain. When the wise men asked him the reason, Bauba's unborn voice trembled as he replied: "I feel something bad... I feel the energy being drawn from within me, the light diminishing." The leader shuddered at these words but tried not to show his fear to his people.`,
- 
-`Chapter 8: The Fall of Darkness: As time sped by, the ominous feeling Bauba had experienced descended upon the entire tribe. One night, the moonlight in the sky first faded, then slowly began to disappear. As the light diminished, the joy of the Hubhubs waned, their bodies grew weary. The tribe was facing the greatest catastrophe in its history.`,
- 
-`Chapter 9: The Council of Wise Men: The elders of the tribe gathered around the ancient table, leaning on their staffs. It was decided to form a research team to stop this silent death. Finding out why the light had left had now become a battle for survival. `,
- 
-`Chapter 10: The Light Thieves: The team's investigations revealed the painful truth: the moonlight hadn't disappeared due to natural events, it had been stolen! A group of gigantic, imposing, and merciless creatures had imprisoned the light of the sky in their dark lair. The tribal leader personally took on the task of confronting these giants for the future of his people and set off on his journey.`,
- 
-`Chapter 11: The Confrontation: After a long and arduous journey, the leader reached the monsters' lair. The sight before him was terrifying; the vast sky seemed to have been shattered into pieces.`, 
-
-`Chapter 12: The Price of Light: The giant creatures, with their roaring voices, declared that the light now belonged to them, and that if the Hubhubs wanted to benefit from this light, they would have to pay a heavy price. The leader was furious; "Light belongs to nature, it cannot be anyone's property! That light is our life!" he said, but he couldn't convince the giants. Realizing there was no other way, the leader declared war. `,
- 
-`Chapter 13: An Untimely Birth: The tribe's strongest warriors had gathered, setting out on a campaign with great fervor. But, in a strange twist of fate, Bauba was born at that very moment. The tribe didn't know whether to rejoice at this birth in the midst of darkness or to mourn in the shadow of war.`,
- 
-`Chapter 14: The Pain of Defeat: The giants were not willing to return the light. Hubhub's army, depleted of its former strength due to the extinguishing of its lights, suffered heavy defeats one after another. Each attack brought more exhaustion and more despair. Their energy-depleted bodies became incapable of wielding swords.`, 
-
-`Chapter 15: On the Brink of Death:They finally gave up. In despair, exhausted, they returned to their village and began to await death. What saddened them most was not the fact that they were going to die, but that little Bauba could not be bathed in the sacred moonlight when he was born, as was customary.`,
- 
-`Chapter 16: Child of Darkness: But a miracle occurred that no one noticed: Bauba managed to be born in pure darkness, without moonlight! This made him different from the rest of the tribe. He was the first Hubhub who could gain strength without needing light. As Bauba grew, this mysterious power began to be noticed by the tribe. He was the people's last hope, a flower blooming in the darkness. While the people withered day by day, the elders of the tribe began to train Bauba with the last of their strength. Bauba became as hard as steel, both physically and spiritually. And finally, the day of salvation knocked on the door. `, 
-
-`Chapter 17: The Lone Warrior: Bauba, clad in his own armor and accompanied by the prayers of his people, set out alone towards the giants' lair.`, 
-
-`Chapter 18: The Final Warning: When Bauba stood before the giants, he chose to speak first. "What you are doing is not just stealing the light, it is suffocating a people. Release him!" he said. But the giants, overcome by their arrogance, turned this little hero away with laughter. Words were no longer enough; swords were drawn.`, 
-
-`Chapter 19: The Color of Victory: When the battle began, the giants were in great shock. Bauba, born in darkness, possessed all the secrets of darkness and drew strength not from weakness, but from darkness itself. He brought them all to their knees one by one. With a great roar, he defeated the giants and shattered the hideous dungeon where the light was imprisoned.`, 
-
-`Chapter 20: The Return of the Sky. Bauba, freeing the enormous moon from its imprisonment in the dark, watched as the light re-embroidered the sky like lace. At that moment, something else happened: When the sacred moonlight touched Bauba's body, the power within him multiplied. His power, forged in darkness, merged with the light, transforming Bauba into the most powerful being in all the lands.`,
-
-`Chapter 21: Homecoming: Bauba returned to his tribe with a great victory. He recounted everything he had experienced to his people, who had been revived by the arrival of the light. Despite being at the peak of his power, he proved his wisdom by saying that he still had much to learn and would continue his education.`, 
-
-`Chapter 22: A New Era: He promised that when the time came, he would be a just leader for his people and proudly carry his father's glorious name. Under the silvery light they had regained, the Moonlight Tribe celebrated Bauba's victory with festivities that lasted for days.`,
- 
-`This is Bauba's story... To be a hero, you have to make the right decisions at the right time.`,
- `Written and Illustrated by: Hasan Yavuz`,
- `Sahne 27: Ufuk çizgisindeki gemi.`,
- `Sahne 28: Kaptan selam veriyor.`,
- `Sahne 29: Yeni diyarlara yelken açıyoruz.`,
- `Sahne 30: Yıldızların altında sessiz bir gece.`,
- `Sahne 31: Ay ışığı yolumuzu aydınlatıyor.`,
- `Sahne 32: Bir rüyanın içindeyiz sanki.`, 
-`Sahne 33: Gerçek ve hayalin birleştiği nokta.`,
- `Sahne 34: Sonun başlangıcına doğru.`, 
-`Sahne 35: Ve perde yavaşça kapanıyor...`,
- `Sahne 36: Bu hikaye burada biter, yenisi yakında.`
-        ];
-
-        const SCENE_SPEEDS = [
-            20, 8, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40
-        ];
-
-        const scrollContent = document.getElementById('scrollContent');
-        const crankHandle = document.getElementById('crankHandle');
-        const curtainLeft = document.getElementById('curtainLeft');
-        const curtainRight = document.getElementById('curtainRight');
-        const statusText = document.getElementById('statusText');
-        const bgMusic = document.getElementById('bgMusic');
-        const subHolder = document.getElementById('subHolder');
-        const subText = document.getElementById('subText');
-        const bannerImg = document.getElementById('bannerImg');
-
-        MY_IMAGES.forEach((src) => {
-            const img = document.createElement('img');
-            img.src = IMAGE_PATH + src;
-            img.className = 'crankie-image';
-            scrollContent.appendChild(img);
-        });
-
-        let currentRotation = 0; 
-        let lastAngle = 0;
-        let isDragging = false;
-        let musicStarted = false; 
-        const CURTAIN_OPEN_THRESHOLD = 360; 
-        let currentTrackName = "fon.mp3"; 
-        let lastActiveIndex = -1;
-
-        // --- TAM EKRAN FONKSİYONU ---
-        function toggleFullScreen() {
-            const doc = window.document;
-            const docEl = doc.documentElement;
-
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-            if (window.innerWidth > window.innerHeight) { // Yatay modda mıyız?
-                if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-                    if (requestFullScreen) requestFullScreen.call(docEl);
-                }
-            } else { // Dikey modda mıyız?
-                if (doc.fullscreenElement || doc.mozFullScreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement) {
-                    if (cancelFullScreen) cancelFullScreen.call(doc);
-                }
-            }
-        }
-
-        // Oryantasyon değiştiğinde kontrol et
-        window.addEventListener('resize', toggleFullScreen);
-
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.getElementById('loadingScreen').style.opacity = '0';
-                setTimeout(() => document.getElementById('loadingScreen').style.display = 'none', 800);
-                updateStage();
-            }, 1000); 
-        });
-
-        function changeMusic(fileName) {
-            if (currentTrackName !== fileName) {
-                currentTrackName = fileName;
-                bgMusic.src = IMAGE_PATH + fileName;
-                bgMusic.loop = (fileName !== "fon36.mp3");
-                bgMusic.play().catch(() => {});
-            }
-        }
-
-        function updateStage() {
-            if (currentRotation <= CURTAIN_OPEN_THRESHOLD) {
-                const progress = Math.max(0, currentRotation / CURTAIN_OPEN_THRESHOLD);
-                curtainLeft.style.transform = `translateX(${-progress * 110}%)`;
-                curtainRight.style.transform = `translateX(${progress * 110}%)`;
-                bannerImg.style.display = "block";
-                bannerImg.style.transform = `translateX(${-progress * 120}%)`;
-                subText.style.display = "none";
-                changeMusic("fon.mp3"); 
-                statusText.innerText = "The curtain opens...";
-            } else {
-                curtainLeft.style.transform = `translateX(-110%)`;
-                curtainRight.style.transform = `translateX(110%)`;
-                bannerImg.style.display = "none";
-                subText.style.display = "inline-block";
-                
-                const firstImg = scrollContent.querySelector('img');
-                const imageWidth = firstImg ? firstImg.offsetWidth : 100;
-                const dynamicSensitivity = imageWidth / 360;
-
-                let scrollPos = (currentRotation - CURTAIN_OPEN_THRESHOLD) * dynamicSensitivity;
-                const maxScroll = scrollContent.scrollWidth - imageWidth;
-                if (scrollPos > maxScroll) {
-                    scrollPos = maxScroll;
-                    currentRotation = (maxScroll / dynamicSensitivity) + CURTAIN_OPEN_THRESHOLD;
-                }
-
-                scrollContent.style.transform = `translateX(${-scrollPos}px)`;
-
-                let activeIndex = Math.floor(scrollPos / imageWidth);
-                if (activeIndex < 0) activeIndex = 0;
-                if (activeIndex > 35) activeIndex = 35;
-
-                if(activeIndex !== lastActiveIndex) {
-                    subText.innerText = SCENE_TEXTS[activeIndex] || "";
-                    const currentSpeed = SCENE_SPEEDS[activeIndex] || 40;
-                    subText.style.animation = "none"; 
-                    subText.offsetHeight; 
-                    subText.style.animation = `marquee ${currentSpeed}s linear infinite`; 
-                    lastActiveIndex = activeIndex;
-                }
-
-                let musicNum = activeIndex + 2; 
-                if (musicNum > 36) musicNum = 36; 
-                changeMusic(`fon${musicNum}.mp3`);
-                statusText.innerText = `Sahne: ${activeIndex + 1} / 36`;
-            }
-        }
-
-        function handleMove(e) {
-            if (!isDragging) return;
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            const rect = crankHandle.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const newAngle = Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI);
-            let delta = newAngle - lastAngle;
-            if (delta > 180) delta -= 360;
-            if (delta < -180) delta += 360;
-            currentRotation += delta;
-            if (currentRotation < 0) currentRotation = 0;
-            lastAngle = newAngle;
-            crankHandle.style.transform = `rotate(${currentRotation}deg)`;
-            updateStage();
-        }
-
-        const start = (e) => {
-            // Kullanıcı dokunduğunda tam ekranı tetikle (Cihaz yataysa)
-            toggleFullScreen();
-
-            if (!musicStarted) {
-                bgMusic.play().catch(() => {});
-                musicStarted = true;
-            }
-            isDragging = true;
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            const rect = crankHandle.getBoundingClientRect();
-            lastAngle = Math.atan2(clientY - (rect.top + rect.height/2), clientX - (rect.left + rect.width/2)) * (180/Math.PI);
-        };
-
-        const stop = () => { isDragging = false; };
-
-        crankHandle.addEventListener('mousedown', start);
-        window.addEventListener('mousemove', handleMove);
-        window.addEventListener('mouseup', stop);
-        crankHandle.addEventListener('touchstart', (e) => { e.preventDefault(); start(e); }, { passive: false });
-        window.addEventListener('touchmove', (e) => { handleMove(e); }, { passive: false });
-        window.addEventListener('touchend', stop);
-
-        document.getElementById('playBtn').addEventListener('click', () => { toggleFullScreen(); bgMusic.play(); musicStarted = true; });
-        document.getElementById('stopBtn').addEventListener('click', () => bgMusic.pause());
-    </script>
 </body>
 </html>
