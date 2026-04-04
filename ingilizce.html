@@ -5,7 +5,7 @@
     <div style="background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 40px 30px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column; align-items: center;">
         
         <div id="tutMessage" style="font-family: 'Special Elite', cursive, sans-serif; font-size: 19px; margin-bottom: 30px; min-height: 85px; color: #1a1a1a; line-height: 1.5;">
-            Tiyatroya Hoş Geldiniz!<br>Hazırlanıyor...
+            Welcome !<br>getting ready...
         </div>
         
         <div style="position: relative; width: 140px; height: 140px; margin: 20px 0;">
@@ -44,7 +44,7 @@
 
             function runTutorial() {
                 if (step >= 2) {
-                    message.innerHTML = "Harika! Artık hazırsınız.<br>İyi seyirler dileriz.";
+                    message.innerHTML = "Great! You're ready now.<br>We hope you enjoy the show.";
                     btn.style.display = "block";
                     arrow.classList.remove('animate-arrow');
                     arrow.style.opacity = "0";
@@ -53,7 +53,7 @@
 
                 // Başlangıç Ayarları
                 arrow.classList.add('animate-arrow');
-                message.innerText = "Kolu gösterilen yönde yavaşça çevirmeye başlayın.";
+                message.innerText = "Begin slowly turning the handle in the direction indicated.";
                 
                 // 5 Saniyelik Dönüş Başlar
                 crank.style.transform = `rotate(${(step + 1) * 370}deg)`;
@@ -66,7 +66,7 @@
 
                 // Yazı Değişimi (3. saniyede)
                 setTimeout(() => {
-                    message.innerHTML = "Yeni sahneye geçmek için kolu<br><b>saat 1 yönünde durduğunda yeni sahnenin yazısı ve hikayesi başlar</b> tutmalısınız.";
+                    message.innerHTML = "o move to the new scene,<br><b>he wrist will stop at the 1 o'clock position, and the text and story of the new scene will begin.</b> ";
                 }, 3000);
 
                 // Reset ve Döngü (7.5sn toplam süre)
