@@ -147,7 +147,7 @@
 </head>
 <body>
     <div id="loadingScreen">
-        <div class="crank-label">YÜKLENİYOR...</div>
+        <div class="crank-label">LOADİNG...</div>
         <div class="crank-wrapper loader-spin"><div class="crank-handle"><div class="crank-knob"></div></div></div>
     </div>
 
@@ -166,7 +166,7 @@
         </div>
 
         <div class="controls-group">
-            <div class="crank-label">BAŞLAMAK İÇİN KOLU DÖNDÜR </div>
+            <div class="crank-label">TURN THE HANDLE TO START. </div>
             <div class="crank-wrapper">
                 <div id="crankHandle" class="crank-handle">
                     <div class="crank-knob"></div>
@@ -187,56 +187,58 @@
 
     <script>
         const IMAGE_PATH = "resimler/";
-        const MY_IMAGES = ["sahne1.jpg","sahne2.jpg","sahne3.jpg","sahne4.jpg","sahne5.jpg","sahne6.jpg","sahne7.jpg","sahne8.jpg","sahne9.jpg","sahne10.jpg","sahne11.jpg","sahne12.jpg","sahne13.jpg","sahne14.jpg","sahne15.jpg","sahne16.jpg","sahne17.jpg","sahne18.jpg","sahne19.jpg","sahne20.jpg","sahne21.jpg","sahne22.jpg","sahne23.jpg","sahne24.jpg","sahne25.jpg","sahne26.jpg","sahne27.jpg","sahne28.jpg","sahne29.jpg","sahne30.jpg","sahne31.jpg","sahne32.jpg","sahne33.jpg","sahne34.jpg","sahne35.jpg","sahne36.jpg"];
+        const MY_IMAGES = ["sahne0.jpg","sahne1.jpg","sahne2.jpg","sahne3.jpg","sahne4.jpg","sahne5.jpg","sahne6.jpg","sahne7.jpg","sahne8.jpg","sahne9.jpg","sahne10.jpg","sahne11.jpg","sahne12.jpg","sahne13.jpg","sahne14.jpg","sahne15.jpg","sahne16.jpg","sahne17.jpg","sahne18.jpg","sahne19.jpg","sahne20.jpg","sahne21.jpg","sahne22.jpg","sahne23.jpg","sahne24.jpg","sahne25.jpg","sahne26.jpg","sahne27.jpg","sahne28.jpg","sahne29.jpg","sahne30.jpg","sahne31.jpg","sahne32.jpg","sahne33.jpg","sahne34.jpg","sahne35.jpg","sahne36.jpg"];
 
         const SCENE_TEXTS = [
-            `Hikayemiz burada başlıyor...  BAUBA: Hubhubların Kralı`,
- `1. Bölüm: Ay Işığının Çocukları: Evrenin en ücra köşesinde kadim bir gezegen varmış. Bu gezegenin kalbinde, Ay Işığı Kabilesi yaşamlarını sürdürürmüş. Kendilerine Hubhub diyen bu varlıklar, ne ekmekle ne de suyla beslenirmiş; onların tek hayat kaynağı, gökyüzünden süzülen o masum ay ışığıymış. Enerjilerini bu ışıktan sağar, ruhlarını onunla beslerlermiş.`, 
+   `You can listen to the story for each episode separately. To do this, you need to align the image perfectly with the scene. Each time you turn the joystick, the story of that image will begin and appear as subtitles. Enjoy watching!`,         
+`BAUBA: The King of the Hubhubs`,
 
-`2. Bölüm: Bir Eksik Umut: Kabilenin bilge lideri, halkı tarafından çok sevilse de yüreğinde derin bir sızı taşırmış. Zaman geçip giderken, bir evladının olmaması onu kederin karanlık kuyularına itermiş. Sarayının balkonundan gökyüzüne bakar, bu sessizliği bir çocuk sesinin bölmesini hayal edermiş.`, 
+ `Chapter 1: Children of Moonlight: In the farthest corner of the universe, there was an ancient planet. At the heart of this planet lived the Moonlight Tribe. These beings, who called themselves Hubhubs, were nourished by neither bread nor water; their only source of life was the innocent moonlight that streamed down from the sky. They drew their energy from this light and nourished their souls with it.`, 
 
-`3. Bölüm: Kutsal Yakarış:Sonunda lider ve eşi, ellerini göğe açarak Ay Işığı Tanrısı’na yakarmışlar. Kalplerindeki saf arzuyla, soylarını devam ettirecek bir mucize dilemişler. Duaları, ayın şefkatli ışığında yankılanmış.`, 
+`Chapter 2: A Missing Hope: Although the wise leader of the tribe was much loved by his people, he carried a deep ache in his heart. As time passed, the fact that he had no child pushed him into the dark depths of sorrow. He would look at the sky from the balcony of his palace, imagining that the silence would be broken by the sound of a child's voice.`, 
 
-`4. Bölüm: Mucizenin İlk İzleri: Dualar karşılıksız kalmamış. Bir sabah hanım lider, içinde tarif edilemez bir sıcaklıkla uyanmış. Karnında minik bir can, bir Hubhub filizlenmekteymiş. Bu, sadece bir bebeğin değil, kabilenin geleceğinin de müjdecisiymiş.`,
+`Chapter 3: The Holy Supplication: Finally, the leader and his wife raised their hands to the sky and prayed to the God of Moonlight. With the pure desire in their hearts, they asked for a miracle that would continue their lineage. Their prayers echoed in the compassionate light of the moon.`, 
+
+`Chapter 4: The First Traces of the Miracle:The prayers had not gone unanswered. One morning, the female leader awoke with an indescribable warmth within her. A tiny life, a Hubhub, was sprouting in her womb. This was not only a sign of a baby, but also a harbinger of the tribe's future.`,
  
-`5. Bölüm: Büyük Şölen :Haber kabileye ulaştığında yer yerinden oynamış. Günlerce süren kutlamalar yapılmış, şarkılar söylenmiş. Ay ışığı altında dans eden Hubhublar, bu mucizeyi en büyük bayramları ilan etmişler.`, 
+`Chapter 5: The Great Feast:When the news reached the tribe, the ground shook. Celebrations lasted for days, songs were sung. The Hubhubs, dancing under the moonlight, declared this miracle their greatest festival.`, 
 
-`6. Bölüm: İsim ve Kehanet: Aylar geçmiş, doğum vakti yaklaşmış. Hubhublar öyle gizemli bir kabileymiş ki, bebekleri henüz anne karnındayken dünyayla bağ kurar, konuşmaya başlarmış. Kabile halkı bebeğin sesini duymak için toplanmış. Bebeğin kendine seçtiği isim, evrenin boşluğunda yankılanmış: Bauba.`, 
+`Chapter 6: The Name and the Prophecy: Months passed, the time of birth approaching. The Hubhubs were such a mysterious tribe that their babies would connect with the world and begin to speak while still in the womb. The tribe gathered to hear the baby's voice. The name the baby chose for itself echoed in the void of the universe: Bauba.`, 
 
-`7. Bölüm: Kötü Bir Sezgi: Ancak doğuma sayılı günler kala Bauba huzursuzlanmaya başlamış. Annesinin karnında alışılmadık bir hareketlilikle sancılara sebep oluyormuş. Bilgeler ona nedenini sorduklarında, Bauba’nın henüz doğmamış sesi titreyerek cevap vermiş: "Kötü bir şey hissediyorum... İçimdeki enerjinin çekildiğini, ışığın azaldığını hissediyorum." Lider bu sözlerle ürpermiş ama halkına korkusunu belli etmemeye çalışmış.`,
+`Chapter 7: A Bad Intuition: However, with only a few days left until the birth, Bauba began to become restless. In his mother's womb, an unusual movement was causing him pain. When the wise men asked him the reason, Bauba's unborn voice trembled as he replied: "I feel something bad... I feel the energy being drawn from within me, the light diminishing." The leader shuddered at these words but tried not to show his fear to his people.`,
  
-`8. Bölüm: Karanlığın Çöküşü: Zaman hızla akıp giderken, Bauba’nın hissettiği o uğursuzluk tüm kabilenin üzerine çökmüş. Bir gece, gökyüzündeki ay ışığı önce solmuş, sonra yavaş yavaş kaybolmaya başlamış. Işık azaldıkça Hubhubların neşesi sönmüş, bedenleri bitkin düşmüş. Kabile, tarihindeki en büyük felaketle yüzleşiyormuş.`,
+`Chapter 8: The Fall of Darkness: As time sped by, the ominous feeling Bauba had experienced descended upon the entire tribe. One night, the moonlight in the sky first faded, then slowly began to disappear. As the light diminished, the joy of the Hubhubs waned, their bodies grew weary. The tribe was facing the greatest catastrophe in its history.`,
  
-`9. Bölüm: Bilgeler Meclisi: Kabilenin en yaşlıları, asalarına dayanarak kadim masanın başında bir araya gelmişler. Bu sessiz ölümü durdurmak için bir araştırma ekibi kurulmasına karar verilmiş. Işığın neden terk ettiğini bulmak, artık bir varoluş savaşına dönüşmüş.`,
+`Chapter 9: The Council of Wise Men: The elders of the tribe gathered around the ancient table, leaning on their staffs. It was decided to form a research team to stop this silent death. Finding out why the light had left had now become a battle for survival. `,
  
-`10. Bölüm: Işık Hırsızları: Ekibin araştırmaları acı gerçeği ortaya çıkarmış: Ay ışığı doğa olaylarıyla kaybolmamış, resmen çalınmış! Devasa, heybetli ve acımasız canlılardan oluşan bir grup, gökyüzünün nurunu kendi karanlık hanelerine hapsetmişler. Kabile lideri, halkının geleceği için bu devlerle yüzleşme görevini bizzat üstlenmiş ve yola koyulmuş.`,
+`Chapter 10: The Light Thieves: The team's investigations revealed the painful truth: the moonlight hadn't disappeared due to natural events, it had been stolen! A group of gigantic, imposing, and merciless creatures had imprisoned the light of the sky in their dark lair. The tribal leader personally took on the task of confronting these giants for the future of his people and set off on his journey.`,
  
-`11. Bölüm: Yüzleşme: Lider, uzun ve meşakkatli bir yolculuğun ardından canavarların inine ulaşmış. Karşısındaki manzara ürkütücüymüş; koca gökyüzü parçalara ayrılmış gibi duruyormuş.`, 
+`Chapter 11: The Confrontation: After a long and arduous journey, the leader reached the monsters' lair. The sight before him was terrifying; the vast sky seemed to have been shattered into pieces.`, 
 
-`12. Bölüm: Işığın Bedeli: Dev canlılar, kükreyen sesleriyle ışığın artık kendilerine ait olduğunu, eğer Hubhublar bu ışıktan faydalanmak istiyorlarsa ağır bedeller ödemeleri gerektiğini söylemişler. Lider çok öfkelenmiş; "Işık doğanındır, kimsenin malı olamaz! Bizim canımız o ışıktır!" dese de devleri ikna edememiş. Başka yol kalmadığını anlayan lider, savaş ilan etmiş.`,
+`Chapter 12: The Price of Light: The giant creatures, with their roaring voices, declared that the light now belonged to them, and that if the Hubhubs wanted to benefit from this light, they would have to pay a heavy price. The leader was furious; "Light belongs to nature, it cannot be anyone's property! That light is our life!" he said, but he couldn't convince the giants. Realizing there was no other way, the leader declared war. `,
  
-`13. Bölüm: Zamansız Doğum: Kabilenin en güçlü savaşçıları toplanmış, büyük bir hırsla sefere çıkılmış. Ancak kaderin garip bir cilvesi olarak, tam o sırada Bauba dünyaya gözlerini açmış. Kabile, karanlığın ortasında gelen bu doğuma sevinse mi yoksa savaşın gölgesinde yas mı tutsa bilememiş.`,
+`Chapter 13: An Untimely Birth: The tribe's strongest warriors had gathered, setting out on a campaign with great fervor. But, in a strange twist of fate, Bauba was born at that very moment. The tribe didn't know whether to rejoice at this birth in the midst of darkness or to mourn in the shadow of war.`,
  
-`14. Bölüm: Mağlubiyetin Acısı:Devler, ışığı geri vermeye niyetli değilmiş. Işıkları söndüğü için eski güçlerinden eser kalmayan Hubhub ordusu, üst üste ağır yenilgiler almış. Her saldırı, daha fazla yorgunluk ve daha fazla umutsuzluk getirmiş. Enerjisiz kalan bedenleri, kılıç tutamaz hale gelmiş.`, 
+`Chapter 14: The Pain of Defeat: The giants were not willing to return the light. Hubhub's army, depleted of its former strength due to the extinguishing of its lights, suffered heavy defeats one after another. Each attack brought more exhaustion and more despair. Their energy-depleted bodies became incapable of wielding swords.`, 
 
-`15. Bölüm: Ölümün Kıyısında: Sonunda pes etmişler. Çaresizlik içinde, enerjileri tükenmiş bir halde köylerine dönüp ölümü beklemeye başlamışlar. Onları en çok üzen şey ise ölecek olmaları değil, minik Bauba’nın geleneklere uygun olarak doğduğunda kutsal ay ışığında yıkanamamış olmasıymış.`,
+`Chapter 15: On the Brink of Death:They finally gave up. In despair, exhausted, they returned to their village and began to await death. What saddened them most was not the fact that they were going to die, but that little Bauba could not be bathed in the sacred moonlight when he was born, as was customary.`,
  
-`16. Bölüm: Karanlığın Çocuğu: Fakat kimsenin fark etmediği bir mucize gerçekleşmiş: Bauba, ay ışığı olmadan, saf karanlığın içinde doğmayı başarmış! Bu durum onu kabilenin geri kalanından farklı kılıyormuş. O, ışığa ihtiyaç duymadan da güçlenebilen ilk Hubhub'mış. Bauba büyüdükçe, bu gizemli güç kabile tarafından fark edilmeye başlanmış. O, halkın son umudu, karanlıkta açan bir çiçekmiş. Halkı gün be gün solarken, kabilenin yaşlıları ellerinde kalan son güçle Bauba’yı eğitmeye başlamışlar. Bauba, hem fiziksel hem de ruhsal olarak çelik gibi sertleşmiş. Ve sonunda, kurtuluş günü kapıyı çalmış.`, 
+`Chapter 16: Child of Darkness: But a miracle occurred that no one noticed: Bauba managed to be born in pure darkness, without moonlight! This made him different from the rest of the tribe. He was the first Hubhub who could gain strength without needing light. As Bauba grew, this mysterious power began to be noticed by the tribe. He was the people's last hope, a flower blooming in the darkness. While the people withered day by day, the elders of the tribe began to train Bauba with the last of their strength. Bauba became as hard as steel, both physically and spiritually. And finally, the day of salvation knocked on the door. `, 
 
-`17. Bölüm: Yalnız Savaşçı: Kendi zırhını kuşanmış olan Bauba, halkının dualarını yanına alarak devlerin inine doğru tek başına yola çıkmış.`, 
+`Chapter 17: The Lone Warrior: Bauba, clad in his own armor and accompanied by the prayers of his people, set out alone towards the giants' lair.`, 
 
-`18. Bölüm: Son Uyarı: Bauba, devlerin karşısına dikildiğinde önce konuşmayı seçmiş. "Yaptığınız şey sadece ışığı çalmak değil, bir halkın nefesini kesmektir. Onu serbest bırakın!" demiş. Ancak kibirlerine yenik düşen devler, bu küçük kahramanı kahkahalarla geri çevirmişler. Artık söz bitmiş, kılıçlar çekilmiş.`, 
+`Chapter 18: The Final Warning: When Bauba stood before the giants, he chose to speak first. "What you are doing is not just stealing the light, it is suffocating a people. Release him!" he said. But the giants, overcome by their arrogance, turned this little hero away with laughter. Words were no longer enough; swords were drawn.`, 
 
-`19. Bölüm: Zaferin Rengi: Savaş başladığında devler büyük bir şok yaşamış. Bauba, karanlıkta doğduğu için karanlığın tüm sırlarına hakimmiş ve zayıflıktan değil, karanlıktan güç alıyormuş. Teker teker hepsini dize getirmiş. Büyük bir gürültüyle devleri yenmiş ve ışığın tutsak edildiği o çirkin mahzeni parçalamış.`, 
+`Chapter 19: The Color of Victory: When the battle began, the giants were in great shock. Bauba, born in darkness, possessed all the secrets of darkness and drew strength not from weakness, but from darkness itself. He brought them all to their knees one by one. With a great roar, he defeated the giants and shattered the hideous dungeon where the light was imprisoned.`, 
 
-`20. Bölüm: Gökyüzünün Dönüşü: Kocaman ayı, hapsedildiği o karanlık yerden çıkaran Bauba, ışığın gökyüzünü yeniden nasıl bir dantel gibi işlediğini izlemiş. O an bir şey daha olmuş: Kutsal ay ışığı Bauba’nın vücuduna değdiğinde, içindeki güç katlanarak artmış. Karanlıkta yoğrulan gücü, ışıkla birleşince Bauba tüm diyarların en kudretli varlığına dönüşmüş.`,
+`Chapter 20: The Return of the Sky. Bauba, freeing the enormous moon from its imprisonment in the dark, watched as the light re-embroidered the sky like lace. At that moment, something else happened: When the sacred moonlight touched Bauba's body, the power within him multiplied. His power, forged in darkness, merged with the light, transforming Bauba into the most powerful being in all the lands.`,
 
-`21. Bölüm: Eve Dönüş: Bauba, büyük bir zaferle kabilesine dönmüş. Işığın gelişiyle canlanan halkına, yaşadığı her şeyi bir bir anlatmış. Gücünün zirvesinde olmasına rağmen, hala öğrenecek çok şeyi olduğunu ve eğitimine devam edeceğini söyleyerek bilgeliğini kanıtlamış.`, 
+`Chapter 21: Homecoming: Bauba returned to his tribe with a great victory. He recounted everything he had experienced to his people, who had been revived by the arrival of the light. Despite being at the peak of his power, he proved his wisdom by saying that he still had much to learn and would continue his education.`, 
 
-`22. Bölüm: Yeni Bir Çağ: Zamanı geldiğinde halkı için adil bir reis olacağına ve babasının şanlı ismini gururla taşıyacağına söz vermiş. Ay Işığı Kabilesi, yeniden kavuştukları gümüşi ışığın altında, günlerce süren şenliklerle Bauba’nın zaferini kutlamışlar.`,
+`Chapter 22: A New Era: He promised that when the time came, he would be a just leader for his people and proudly carry his father's glorious name. Under the silvery light they had regained, the Moonlight Tribe celebrated Bauba's victory with festivities that lasted for days.`,
  
-`İşte bu Bauba'nın hikayesi... Kahraman olmak için doğru kararları doğru zamanda vermek gerekir.`,
- `Yazan ve Resimleyen: Hasan Yavuz`,
+`This is Bauba's story... To be a hero, you have to make the right decisions at the right time.`,
+ `Written and Illustrated by: Hasan Yavuz`,
  `Sahne 27: Ufuk çizgisindeki gemi.`,
  `Sahne 28: Kaptan selam veriyor.`,
  `Sahne 29: Yeni diyarlara yelken açıyoruz.`,
@@ -250,7 +252,7 @@
         ];
 
         const SCENE_SPEEDS = [
-            5, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 20, 30, 30, 30, 30, 30, 30, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20
+            20, 8, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40
         ];
 
         const scrollContent = document.getElementById('scrollContent');
@@ -326,7 +328,7 @@
                 bannerImg.style.transform = `translateX(${-progress * 120}%)`;
                 subText.style.display = "none";
                 changeMusic("fon.mp3"); 
-                statusText.innerText = "Perde açılıyor...";
+                statusText.innerText = "The curtain opens...";
             } else {
                 curtainLeft.style.transform = `translateX(-110%)`;
                 curtainRight.style.transform = `translateX(110%)`;
